@@ -24,7 +24,7 @@ public class ItemIconEntry extends IconEntry<Item> {
 
             if (entered.startsWith("#") && allowTags) {
                 entered = entered.replaceAll("#", "");
-                List<Item> items = TagHelper.getItemsInTag(Identifier.of(entered));
+                List<Item> items = TagHelper.getItemsInTag(new Identifier(entered));
                 if (items.size() > 0)
                     enteredTag = items;
                 else enteredTag = null;
@@ -35,7 +35,7 @@ public class ItemIconEntry extends IconEntry<Item> {
             }
             if (entered.startsWith("#"))
                 return Items.BARRIER;
-            return Registries.ITEM.getOrEmpty(Identifier.of(entered)).orElse(Items.BARRIER);
+            return Registries.ITEM.getOrEmpty(new Identifier(entered)).orElse(Items.BARRIER);
         } catch (InvalidIdentifierException ignored) {
         }
         return Items.BARRIER;

@@ -12,7 +12,7 @@ import net.minecraft.util.Identifier;
 public class NotSuckyButton extends ButtonWidget {
     int buttonColor = 16777215;
     public boolean disableHover = false;
-    private static final ButtonTextures TEXTURES = new ButtonTextures(Identifier.of("widget/button"), Identifier.of("widget/button_disabled"), Identifier.of("widget/button_highlighted"));
+    private static final ButtonTextures TEXTURES = new ButtonTextures(new Identifier("widget/button"), new Identifier("widget/button_disabled"), new Identifier("widget/button_highlighted"));
 
     public NotSuckyButton(int x, int y, int width, int height, Text message, PressAction onPress) {
         super(x, y, width, height, message, onPress, DEFAULT_NARRATION_SUPPLIER);

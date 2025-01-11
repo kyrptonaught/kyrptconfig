@@ -19,8 +19,8 @@ public class ConfigScreen extends Screen {
     Screen previousScreen;
     private NotSuckyButton scrollLeftBTN, scrollRightBTN;
     int horizontalScrollOffset = -1;
-    private static final Identifier SCROLLER_TEXTURE = Identifier.of("widget/scroller");
-    private static final Identifier OPTIONS_BACKGROUND_TEXTURE = Identifier.of("textures/block/dirt.png");
+    private static final Identifier SCROLLER_TEXTURE = new Identifier("widget/scroller");
+    private static final Identifier OPTIONS_BACKGROUND_TEXTURE = new Identifier("textures/block/dirt.png");
 
     public ConfigScreen(Screen previousScreen, Text title) {
         super(title);

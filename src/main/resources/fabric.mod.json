@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "id": "kyrptconfig",
-  "version": "1.6.1-1.20.4",
+  "version": "1.6.1-1.20.5",
   "name": "Kyrpt Config",
   "description": "Config library used in my mods",
   "authors": [
@@ -31,8 +31,7 @@
   },
   "depends": {
     "fabricloader": ">=0.15.11",
-    "fabric": "*",
-    "java": ">=21"
+    "fabric": "*"
   },
   "custom": {
     "modmenu": {

@@ -25,7 +25,7 @@ public class BlockIconEntry extends IconEntry<Block> {
             if (entered.startsWith("#") && allowTags) {
                 entered = entered.replaceAll("#", "");
 
-                List<Block> blocks = TagHelper.getBlocksInTag(Identifier.of(entered));
+                List<Block> blocks = TagHelper.getBlocksInTag(new Identifier(entered));
                 if (blocks.size() > 0)
                     enteredTag = blocks;
                 else enteredTag = null;
@@ -37,7 +37,7 @@ public class BlockIconEntry extends IconEntry<Block> {
             }
             if (entered.startsWith("#"))
                 return Items.BARRIER;
-            return Registries.BLOCK.getOrEmpty(Identifier.of(entered)).orElse(Blocks.BARRIER);
+            return Registries.BLOCK.getOrEmpty(new Identifier(entered)).orElse(Blocks.BARRIER);
         } catch (Exception ignored) {
         }
         return Items.BARRIER;

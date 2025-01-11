@@ -28,7 +28,7 @@ public class ConfigManager {
         Jankson.Builder builder = CustomJankson.customJanksonBuilder();
         setJANKSON(builder
                 .registerSerializer(Identifier.class, (identifier, marshaller) -> marshaller.serialize(identifier.toString()))
-                .registerDeserializer(String.class, Identifier.class, (s, m) -> Identifier.of(s))
+                .registerDeserializer(String.class, Identifier.class, (s, m) -> new Identifier(s))
                 .build());
     }
 

@@ -1,13 +1,14 @@
 package net.kyrptonaught.kyrptconfig.config.screen;
 
-import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.ButtonTextures;
 import net.minecraft.client.gui.widget.ButtonWidget;
+import net.minecraft.client.render.RenderLayer;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.math.ColorHelper;
 
 public class NotSuckyButton extends ButtonWidget {
     int buttonColor = 16777215;
@@ -33,12 +34,14 @@ public class NotSuckyButton extends ButtonWidget {
 
         if (disableHover) hovered = false;
 
-        context.setShaderColor(1.0f, 1.0f, 1.0f, this.alpha);
-        RenderSystem.enableBlend();
-        RenderSystem.enableDepthTest();
-        context.drawGuiTexture(TEXTURES.get(this.active, this.isSelected()), this.getX(), this.getY(), this.getWidth(), this.getHeight());
-        //context.drawNineSlicedTexture(WIDGETS_TEXTURE, this.getX(), this.getY(), this.getWidth(), this.getHeight(), 20, 4, 200, 20, 0, this.getTextureY());
-        context.setShaderColor(1.0f, 1.0f, 1.0f, 1.0f);
+        context.drawGuiTexture(
+                RenderLayer::getGuiTextured,
+                TEXTURES.get(this.active, this.isSelected()),
+                this.getX(),
+                this.getY(),
+                this.getWidth(),
+                this.getHeight(),
+                ColorHelper.getWhite(this.alpha));
 
         TextRenderer textRenderer = MinecraftClient.getInstance().textRenderer;
         int i = this.active ? buttonColor : 0xA0A0A0;

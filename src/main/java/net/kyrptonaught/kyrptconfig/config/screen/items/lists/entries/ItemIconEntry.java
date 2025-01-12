@@ -35,7 +35,7 @@ public class ItemIconEntry extends IconEntry<Item> {
             }
             if (entered.startsWith("#"))
                 return Items.BARRIER;
-            return Registries.ITEM.getOrEmpty(Identifier.of(entered)).orElse(Items.BARRIER);
+            return Registries.ITEM.getOptionalValue(Identifier.of(entered)).orElse(Items.BARRIER);
         } catch (InvalidIdentifierException ignored) {
         }
         return Items.BARRIER;

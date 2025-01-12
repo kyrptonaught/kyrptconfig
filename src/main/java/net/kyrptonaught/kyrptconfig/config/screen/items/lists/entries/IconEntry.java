@@ -8,11 +8,11 @@ import net.minecraft.client.render.DiffuseLighting;
 import net.minecraft.client.render.OverlayTexture;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.model.BakedModel;
-import net.minecraft.client.render.model.json.ModelTransformationMode;
 import net.minecraft.client.texture.SpriteAtlasTexture;
 import net.minecraft.item.ItemConvertible;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.item.ModelTransformationMode;
 
 import java.util.List;
 
@@ -49,7 +49,6 @@ public class IconEntry<E> extends ListStringEntry {
     }
 
     protected void renderGuiItemModel(DrawContext context, ItemStack stack, int x, int y) {
-        BakedModel model = MinecraftClient.getInstance().getItemRenderer().getModel(stack, null, null, 0);
         context.getMatrices().push();
         MinecraftClient.getInstance().getTextureManager().getTexture(SpriteAtlasTexture.BLOCK_ATLAS_TEXTURE).setFilter(false, false);
         RenderSystem.setShaderTexture(0, SpriteAtlasTexture.BLOCK_ATLAS_TEXTURE);
@@ -60,11 +59,11 @@ public class IconEntry<E> extends ListStringEntry {
         context.getMatrices().scale(1.0f, -1.0f, 1.0f);
         context.getMatrices().scale(16.0f, 16.0f, 16.0f);
         VertexConsumerProvider.Immediate immediate = MinecraftClient.getInstance().getBufferBuilders().getEntityVertexConsumers();
-        boolean bl = !model.isSideLit();
+        boolean bl = false;
         if (bl) {
             DiffuseLighting.disableGuiDepthLighting();
         }
-        MinecraftClient.getInstance().getItemRenderer().renderItem(stack, ModelTransformationMode.GUI, false, context.getMatrices(), immediate, 0xF000F0, OverlayTexture.DEFAULT_UV, model);
+        MinecraftClient.getInstance().getItemRenderer().renderItem(null, stack, ModelTransformationMode.GUI, false, context.getMatrices(), immediate, null, 0, OverlayTexture.DEFAULT_UV, 6);
 
         immediate.draw();
         if (bl) {

@@ -46,8 +46,8 @@ tasks.withType(JavaCompile).configureEach {
 }
 
 java {
-	sourceCompatibility = JavaVersion.VERSION_17
-	targetCompatibility = JavaVersion.VERSION_17
+	sourceCompatibility = JavaVersion.VERSION_21
+	targetCompatibility = JavaVersion.VERSION_21
 }
 
 jar {
@@ -60,7 +60,7 @@ jar {
 publishing {
 	publications {
 		mavenJava(MavenPublication) {
-			artifactId archivesBaseName
+			artifactId = project.archives_base_name
 			from components.java
 		}
 	}

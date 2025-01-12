@@ -37,7 +37,7 @@ public class BlockIconEntry extends IconEntry<Block> {
             }
             if (entered.startsWith("#"))
                 return Items.BARRIER;
-            return Registries.BLOCK.getOrEmpty(Identifier.of(entered)).orElse(Blocks.BARRIER);
+            return Registries.BLOCK.getOptionalValue(Identifier.of(entered)).orElse(Blocks.BARRIER);
         } catch (Exception ignored) {
         }
         return Items.BARRIER;

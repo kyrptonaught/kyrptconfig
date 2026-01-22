@@ -1,6 +1,6 @@
 package net.kyrptonaught.kyrptconfig.config.screen;
 
-import com.mojang.blaze3d.systems.RenderSystem;
+import com.mojang.blaze3d.opengl.GlStateManager;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.Screen;
@@ -162,8 +162,8 @@ public class ConfigScreen extends Screen {
     @Override
     public void render(DrawContext context, int mouseX, int mouseY, float delta) {
         context.getMatrices().push();
-        RenderSystem.enableBlend();
-        RenderSystem.enableDepthTest();
+        GlStateManager._enableBlend();
+        GlStateManager._enableDepthTest();
 
         renderBackgroundTexture(context);
         context.fillGradient(0, 0, this.width, this.height, -1072689136, -804253680);

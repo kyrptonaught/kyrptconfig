@@ -6,6 +6,7 @@ import net.kyrptonaught.kyrptconfig.config.screen.items.ConfigItem;
 import net.kyrptonaught.kyrptconfig.config.screen.items.SubItem;
 import net.kyrptonaught.kyrptconfig.config.screen.items.lists.entries.ListStringEntry;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.gui.Click;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.text.Text;
 import net.minecraft.util.Colors;
@@ -81,10 +82,10 @@ public class StringList extends SubItem<List<String>> {
     }
 
     @Override
-    public void mouseClicked(double mouseX, double mouseY, int button) {
-        if (expanded && (addButton.mouseClicked(mouseX, mouseY, button) || clearButton.mouseClicked(mouseX, mouseY, button)) || resetButton.mouseClicked(mouseX, mouseY, button))
+    public void mouseClicked(Click click, boolean doubled) {
+        if (expanded && (addButton.mouseClicked(click, doubled) || clearButton.mouseClicked(click, doubled)) || resetButton.mouseClicked(click, doubled))
             return;
-        super.mouseClicked(mouseX, mouseY, button);
+        super.mouseClicked(click, doubled);
     }
 
     @Override

@@ -3,8 +3,11 @@ package net.kyrptonaught.kyrptconfig.config.screen;
 import com.mojang.blaze3d.opengl.GlStateManager;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gl.RenderPipelines;
+import net.minecraft.client.gui.Click;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.Screen;
+import net.minecraft.client.input.CharInput;
+import net.minecraft.client.input.KeyInput;
 import net.minecraft.text.Text;
 import net.minecraft.util.Colors;
 import net.minecraft.util.Identifier;
@@ -132,27 +135,27 @@ public class ConfigScreen extends Screen {
     }
 
     @Override
-    public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
-        if (sections.get(selectedSection).keyPressed(keyCode, scanCode, modifiers)) return true;
-        return super.keyPressed(keyCode, scanCode, modifiers);
+    public boolean keyPressed(KeyInput input) {
+        if (sections.get(selectedSection).keyPressed(input)) return true;
+        return super.keyPressed(input);
     }
 
     @Override
-    public boolean charTyped(char chr, int modifiers) {
-        return sections.get(selectedSection).charTyped(chr, modifiers);
+    public boolean charTyped(CharInput input) {
+        return sections.get(selectedSection).charTyped(input);
     }
 
     @Override
-    public boolean mouseClicked(double mouseX, double mouseY, int button) {
-        super.mouseClicked(mouseX, mouseY, button);
+    public boolean mouseClicked(Click click, boolean doubled) {
+        super.mouseClicked(click, doubled);
 
-        if (scrollLeftBTN.mouseClicked(mouseX, mouseY, button) || scrollRightBTN.mouseClicked(mouseX, mouseY, button))
+        if (scrollLeftBTN.mouseClicked(click, doubled) || scrollRightBTN.mouseClicked(click, doubled))
             return true;
 
         for (ConfigSection section : sections)
-            if (section.sectionSelectionBTN.mouseClicked(mouseX, mouseY, button)) return true;
+            if (section.sectionSelectionBTN.mouseClicked(click, doubled)) return true;
 
-        return sections.get(selectedSection).mouseClicked(mouseX, mouseY, button);
+        return sections.get(selectedSection).mouseClicked(click, doubled);
     }
 
     @Override

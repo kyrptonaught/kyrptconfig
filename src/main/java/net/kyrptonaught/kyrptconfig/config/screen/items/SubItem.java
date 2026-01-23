@@ -1,7 +1,10 @@
 package net.kyrptonaught.kyrptconfig.config.screen.items;
 
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.gui.Click;
 import net.minecraft.client.gui.DrawContext;
+import net.minecraft.client.input.CharInput;
+import net.minecraft.client.input.KeyInput;
 import net.minecraft.text.Text;
 
 import java.util.ArrayList;
@@ -50,35 +53,35 @@ public class SubItem<E> extends ConfigItem<E> {
         }
     }
 
-    public void mouseClicked(double mouseX, double mouseY, int button) {
-        super.mouseClicked(mouseX, mouseY, button);
-        if (!isHidden() && mouseY > subStart && mouseY < subStart + 20)
+    public void mouseClicked(Click click, boolean doubled) {
+        super.mouseClicked(click, doubled);
+        if (!isHidden() && click.y() > subStart && click.y() < subStart + 20)
             expanded = !expanded;
 
         if (expanded && !isHidden()) {
             for (ConfigItem<?> item : configs) {
                 if (item.isHidden()) continue;
-                item.mouseClicked(mouseX, mouseY, button);
+                item.mouseClicked(click, doubled);
             }
         }
     }
 
-    public boolean charTyped(char chr, int modifiers) {
+    public boolean charTyped(CharInput input) {
         if (expanded && !isHidden()) {
             for (ConfigItem<?> item : configs) {
                 if (item.isHidden()) continue;
-                if (item.charTyped(chr, modifiers))
+                if (item.charTyped(input))
                     return true;
             }
         }
         return false;
     }
 
-    public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
+    public boolean keyPressed(KeyInput input) {
         if (expanded && !isHidden()) {
             for (ConfigItem<?> item : configs) {
                 if (item.isHidden()) continue;
-                if (item.keyPressed(keyCode, scanCode, modifiers))
+                if (item.keyPressed(input))
                     return true;
             }
         }

@@ -2,12 +2,14 @@ package net.kyrptonaught.kyrptconfig.config.screen.items.number;
 
 import net.kyrptonaught.kyrptconfig.config.screen.items.ConfigItem;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.gui.Click;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.tooltip.Tooltip;
 import net.minecraft.client.gui.widget.TextFieldWidget;
+import net.minecraft.client.input.CharInput;
+import net.minecraft.client.input.KeyInput;
 import net.minecraft.text.Text;
 import net.minecraft.util.Colors;
-import net.minecraft.util.DyeColor;
 
 import java.math.BigDecimal;
 import java.util.Objects;
@@ -91,20 +93,20 @@ public abstract class NumberItem<T extends Number> extends ConfigItem<T> {
     }
 
     @Override
-    public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
-        super.keyPressed(keyCode, scanCode, modifiers);
-        return valueEntry.keyPressed(keyCode, scanCode, modifiers);
+    public boolean keyPressed(KeyInput input) {
+        super.keyPressed(input);
+        return valueEntry.keyPressed(input);
     }
 
     @Override
-    public boolean charTyped(char chr, int modifiers) {
-        return valueEntry.charTyped(chr, modifiers);
+    public boolean charTyped(CharInput input) {
+        return valueEntry.charTyped(input);
     }
 
     @Override
-    public void mouseClicked(double mouseX, double mouseY, int button) {
-        super.mouseClicked(mouseX, mouseY, button);
-        valueEntry.setFocused(valueEntry.mouseClicked(mouseX, mouseY, button));
+    public void mouseClicked(Click click, boolean doubled) {
+        super.mouseClicked(click, doubled);
+        valueEntry.setFocused(valueEntry.mouseClicked(click, doubled));
     }
 
     @Override

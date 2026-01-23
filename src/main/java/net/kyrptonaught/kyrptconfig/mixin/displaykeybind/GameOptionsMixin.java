@@ -24,7 +24,7 @@ public class GameOptionsMixin {
         SpoofedKeysHelper.spoofed_Keys.clear();
         for (KeyBinding keyBinding : this.allKeys) {
             if (keyBinding instanceof DisplayOnlyKeyBind)
-                SpoofedKeysHelper.spoofed_Keys.add("key_" + keyBinding.getTranslationKey());
+                SpoofedKeysHelper.spoofed_Keys.add("key_" + keyBinding.getBoundKeyTranslationKey());
         }
     }
 }

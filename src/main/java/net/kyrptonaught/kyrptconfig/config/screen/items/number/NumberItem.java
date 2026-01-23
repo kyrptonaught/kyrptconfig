@@ -6,6 +6,7 @@ import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.tooltip.Tooltip;
 import net.minecraft.client.gui.widget.TextFieldWidget;
 import net.minecraft.text.Text;
+import net.minecraft.util.Colors;
 import net.minecraft.util.DyeColor;
 
 import java.math.BigDecimal;
@@ -52,9 +53,9 @@ public abstract class NumberItem<T extends Number> extends ConfigItem<T> {
     public void onTyped(String s) {
         boolean isValid = isValid(s);
         if (isValid) {
-            valueEntry.setEditableColor(0xE0E0E0);
+            valueEntry.setEditableColor(0xE0E0E0E0);
         } else {
-            valueEntry.setEditableColor(DyeColor.RED.getSignColor());
+            valueEntry.setEditableColor(Colors.RED);
         }
         lastInputFixed = false;
     }

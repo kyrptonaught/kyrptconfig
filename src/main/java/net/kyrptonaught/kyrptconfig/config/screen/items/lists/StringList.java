@@ -8,6 +8,7 @@ import net.kyrptonaught.kyrptconfig.config.screen.items.lists.entries.ListString
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.text.Text;
+import net.minecraft.util.Colors;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -89,7 +90,7 @@ public class StringList extends SubItem<List<String>> {
     @Override
     public void render(DrawContext context, int x, int y, int mouseX, int mouseY, float delta) {
         super.render(context, x, y, mouseX, mouseY, delta);
-        context.drawText(MinecraftClient.getInstance().textRenderer, expanded ? "-" : "+", x - 10, y + 5, 16777215, false);
+        context.drawText(MinecraftClient.getInstance().textRenderer, expanded ? "-" : "+", x - 10, y + 5, Colors.WHITE, false);
         subStart = y;
         if (expanded) {
             this.clearButton.setY(y);

@@ -1,17 +1,20 @@
 package net.kyrptonaught.kyrptconfig.config.screen;
 
+import com.mojang.blaze3d.pipeline.RenderPipeline;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.font.TextRenderer;
+import net.minecraft.client.gl.RenderPipelines;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.ButtonTextures;
 import net.minecraft.client.gui.widget.ButtonWidget;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.text.Text;
+import net.minecraft.util.Colors;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.ColorHelper;
 
 public class NotSuckyButton extends ButtonWidget {
-    int buttonColor = 16777215;
+    int buttonColor = Colors.WHITE;
     public boolean disableHover = false;
     private static final ButtonTextures TEXTURES = new ButtonTextures(Identifier.of("widget/button"), Identifier.of("widget/button_disabled"), Identifier.of("widget/button_highlighted"));
 
@@ -35,7 +38,7 @@ public class NotSuckyButton extends ButtonWidget {
         if (disableHover) hovered = false;
 
         context.drawGuiTexture(
-                RenderLayer::getGuiTextured,
+                RenderPipelines.GUI_TEXTURED,
                 TEXTURES.get(this.active, this.isSelected()),
                 this.getX(),
                 this.getY(),
@@ -44,7 +47,7 @@ public class NotSuckyButton extends ButtonWidget {
                 ColorHelper.getWhite(this.alpha));
 
         TextRenderer textRenderer = MinecraftClient.getInstance().textRenderer;
-        int i = this.active ? buttonColor : 0xA0A0A0;
+        int i = this.active ? buttonColor : Colors.LIGHT_GRAY;
         drawMessage(context, textRenderer, i);
     }
 }

@@ -8,6 +8,7 @@ import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.input.CharInput;
 import net.minecraft.client.input.KeyInput;
+import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
 import net.minecraft.util.Colors;
 import net.minecraft.util.Identifier;
@@ -44,7 +45,7 @@ public class ConfigScreen extends Screen {
             this.client.setScreen(previousScreen);
         }));
         for (ConfigSection section : sections) {
-            section.init(client, width, height - 55 - 30);
+            section.init(width, height - 55 - 30);
         }
 
         adjustForHorizontalScroll(this.width);

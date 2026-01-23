@@ -12,7 +12,7 @@ import java.util.Map;
 @Mixin(KeyBinding.class)
 public class KeyBindingMixin {
 
-    @WrapWithCondition(method = "<init>(Ljava/lang/String;Lnet/minecraft/client/util/InputUtil$Type;ILnet/minecraft/client/option/KeyBinding$Category;)V", at = @At(value = "INVOKE", target = "Ljava/util/Map;put(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;"))
+    @WrapWithCondition(method = "<init>(Ljava/lang/String;Lnet/minecraft/client/util/InputUtil$Type;ILnet/minecraft/client/option/KeyBinding$Category;I)V", at = @At(value = "INVOKE", target = "Ljava/util/Map;put(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;"))
     public <K, V> boolean dontRegister(Map<K, V> instance, K k, V v) {
         if (((Object) this instanceof NonConflictingKeyBinding))
             return false;
@@ -21,7 +21,7 @@ public class KeyBindingMixin {
     }
 
     @com.llamalad7.mixinextras.injector.v2.WrapWithCondition(
-            method = "<init>(Ljava/lang/String;Lnet/minecraft/client/util/InputUtil$Type;ILnet/minecraft/client/option/KeyBinding$Category;)V",
+            method = "<init>(Ljava/lang/String;Lnet/minecraft/client/util/InputUtil$Type;ILnet/minecraft/client/option/KeyBinding$Category;I)V",
             at = @At(value = "INVOKE", target = "Lnet/minecraft/client/option/KeyBinding;registerBinding(Lnet/minecraft/client/util/InputUtil$Key;)V")
     )
     public boolean dontRegisterBinding(KeyBinding keyBinding, InputUtil.Key key) {

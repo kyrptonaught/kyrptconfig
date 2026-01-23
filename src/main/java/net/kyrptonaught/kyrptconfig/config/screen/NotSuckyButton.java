@@ -1,24 +1,13 @@
 package net.kyrptonaught.kyrptconfig.config.screen;
 
-import com.mojang.blaze3d.pipeline.RenderPipeline;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.font.TextRenderer;
-import net.minecraft.client.gl.RenderPipelines;
-import net.minecraft.client.gui.DrawContext;
-import net.minecraft.client.gui.screen.ButtonTextures;
 import net.minecraft.client.gui.widget.ButtonWidget;
-import net.minecraft.client.render.RenderLayer;
-import net.minecraft.text.Text;
 import net.minecraft.util.Colors;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.math.ColorHelper;
 
-public class NotSuckyButton extends ButtonWidget {
+public class NotSuckyButton extends ButtonWidget.Text {
     int buttonColor = Colors.WHITE;
     public boolean disableHover = false;
-    private static final ButtonTextures TEXTURES = new ButtonTextures(Identifier.of("widget/button"), Identifier.of("widget/button_disabled"), Identifier.of("widget/button_highlighted"));
 
-    public NotSuckyButton(int x, int y, int width, int height, Text message, PressAction onPress) {
+    public NotSuckyButton(int x, int y, int width, int height, net.minecraft.text.Text message, PressAction onPress) {
         super(x, y, width, height, message, onPress, DEFAULT_NARRATION_SUPPLIER);
     }
 
@@ -31,23 +20,14 @@ public class NotSuckyButton extends ButtonWidget {
     }
 
     @Override
-    public void renderWidget(DrawContext context, int mouseX, int mouseY, float delta) {
-        //This can fix text rendering over the wrong btn
-        //context.getMatrices().translate(0, 0,  1);
+    public net.minecraft.text.Text getMessage() {
+        net.minecraft.text.Text message = super.getMessage();
+        if (this.active) message = message.copy().withColor(buttonColor);
+        return message;
+    }
 
-        if (disableHover) hovered = false;
-
-        context.drawGuiTexture(
-                RenderPipelines.GUI_TEXTURED,
-                TEXTURES.get(this.active, this.isSelected()),
-                this.getX(),
-                this.getY(),
-                this.getWidth(),
-                this.getHeight(),
-                ColorHelper.getWhite(this.alpha));
-
-        TextRenderer textRenderer = MinecraftClient.getInstance().textRenderer;
-        int i = this.active ? buttonColor : Colors.LIGHT_GRAY;
-        drawMessage(context, textRenderer, i);
+    @Override
+    public boolean isHovered() {
+        return !disableHover && super.isHovered();
     }
 }

@@ -1,11 +1,16 @@
 package net.kyrptonaught.kyrptconfig.config.screen;
 
-import com.mojang.blaze3d.systems.RenderSystem;
+import com.mojang.blaze3d.opengl.GlStateManager;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.gl.RenderPipelines;
+import net.minecraft.client.gui.Click;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.client.render.RenderLayer;
+import net.minecraft.client.input.CharInput;
+import net.minecraft.client.input.KeyInput;
+import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
+import net.minecraft.util.Colors;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.ColorHelper;
 import net.minecraft.util.math.MathHelper;
@@ -40,7 +45,7 @@ public class ConfigScreen extends Screen {
             this.client.setScreen(previousScreen);
         }));
         for (ConfigSection section : sections) {
-            section.init(client, width, height - 55 - 30);
+            section.init(width, height - 55 - 30);
         }
 
         adjustForHorizontalScroll(this.width);
@@ -131,27 +136,27 @@ public class ConfigScreen extends Screen {
     }
 
     @Override
-    public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
-        if (sections.get(selectedSection).keyPressed(keyCode, scanCode, modifiers)) return true;
-        return super.keyPressed(keyCode, scanCode, modifiers);
+    public boolean keyPressed(KeyInput input) {
+        if (sections.get(selectedSection).keyPressed(input)) return true;
+        return super.keyPressed(input);
     }
 
     @Override
-    public boolean charTyped(char chr, int modifiers) {
-        return sections.get(selectedSection).charTyped(chr, modifiers);
+    public boolean charTyped(CharInput input) {
+        return sections.get(selectedSection).charTyped(input);
     }
 
     @Override
-    public boolean mouseClicked(double mouseX, double mouseY, int button) {
-        super.mouseClicked(mouseX, mouseY, button);
+    public boolean mouseClicked(Click click, boolean doubled) {
+        super.mouseClicked(click, doubled);
 
-        if (scrollLeftBTN.mouseClicked(mouseX, mouseY, button) || scrollRightBTN.mouseClicked(mouseX, mouseY, button))
+        if (scrollLeftBTN.mouseClicked(click, doubled) || scrollRightBTN.mouseClicked(click, doubled))
             return true;
 
         for (ConfigSection section : sections)
-            if (section.sectionSelectionBTN.mouseClicked(mouseX, mouseY, button)) return true;
+            if (section.sectionSelectionBTN.mouseClicked(click, doubled)) return true;
 
-        return sections.get(selectedSection).mouseClicked(mouseX, mouseY, button);
+        return sections.get(selectedSection).mouseClicked(click, doubled);
     }
 
     @Override
@@ -161,9 +166,9 @@ public class ConfigScreen extends Screen {
 
     @Override
     public void render(DrawContext context, int mouseX, int mouseY, float delta) {
-        context.getMatrices().push();
-        RenderSystem.enableBlend();
-        RenderSystem.enableDepthTest();
+        context.getMatrices().pushMatrix();
+        GlStateManager._enableBlend();
+        GlStateManager._enableDepthTest();
 
         renderBackgroundTexture(context);
         context.fillGradient(0, 0, this.width, this.height, -1072689136, -804253680);
@@ -172,12 +177,10 @@ public class ConfigScreen extends Screen {
 
         section.render(context, 55, mouseX, mouseY, delta);
 
-        context.getMatrices().translate(0, 0, 1);
-
         drawDirtTextureBlurred(context, 0 , 0 ,this.width , 55);
         drawDirtTextureBlurred(context, 0 , this.height - 30 , this.width , 30);
 
-        context.drawCenteredTextWithShadow(this.textRenderer, this.title, this.width / 2, 13, 0xffffff);
+        context.drawCenteredTextWithShadow(this.textRenderer, this.title, this.width / 2, 13, Colors.WHITE);
 
         boolean noHover = scrollLeftBTN.detectHover(mouseX, mouseY) | scrollRightBTN.detectHover(mouseX, mouseY);
         for (int i = 0; i < sections.size(); i++) {
@@ -197,14 +200,11 @@ public class ConfigScreen extends Screen {
         }
 
         if (horizontalScrollOffset > -1) {
-            context.getMatrices().translate(0, 0, 1);
             drawDirtTextureBlurred(context, 0 , 0 ,scrollLeftBTN.getRight() + 1, 55);
             drawDirtTextureBlurred(context, scrollRightBTN.getX() - 1 , 0 ,this.width - (scrollRightBTN.getX()) + 1, 55);
 
             scrollLeftBTN.render(context, mouseX, mouseY, delta);
             scrollRightBTN.render(context, mouseX, mouseY, delta);
-
-            context.getMatrices().translate(0, 0, -1);
         }
 
         if (section.calculateSectionHeight() > 0) {
@@ -218,13 +218,13 @@ public class ConfigScreen extends Screen {
             int y = MathHelper.lerp(percentage, 55, this.height - 30 - height);
 
             context.fill(x, 55, x + 6, this.height - 30, -16777216);
-            context.drawGuiTexture(RenderLayer::getGuiTextured, SCROLLER_TEXTURE, x, y, 6, height);
+            context.drawGuiTexture(RenderPipelines.GUI_TEXTURED, SCROLLER_TEXTURE, x, y, 6, height);
         }
 
         section.render2(context, 55, mouseX, mouseY, delta);
 
         super.render(context, mouseX, mouseY, delta);
-        context.getMatrices().pop();
+        context.getMatrices().popMatrix();
     }
 
     @Override
@@ -232,12 +232,12 @@ public class ConfigScreen extends Screen {
     }
 
     private void renderBackgroundTexture(DrawContext context) {
-        context.drawTexture(RenderLayer::getGuiTextured, OPTIONS_BACKGROUND_TEXTURE, 0, 0, 0, 0, this.width, this.height, 32, 32);
+        context.drawTexture(RenderPipelines.GUI_TEXTURED, OPTIONS_BACKGROUND_TEXTURE, 0, 0, 0, 0, this.width, this.height, 32, 32);
     }
 
     private void drawDirtTextureBlurred(DrawContext context, int x, int y, int width, int height) {
         int color = ColorHelper.fromFloats(.4f, 0, 0, 0);
-        context.drawTexture(RenderLayer::getGuiTextured, OPTIONS_BACKGROUND_TEXTURE, x, y, 0, 0, width, height, 64, 64);
+        context.drawTexture(RenderPipelines.GUI_TEXTURED, OPTIONS_BACKGROUND_TEXTURE, x, y, 0, 0, width, height, 64, 64);
         context.fillGradient(x, y, x + width, y + height, color, color);
     }
 }

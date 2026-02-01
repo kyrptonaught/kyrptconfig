@@ -1,9 +1,12 @@
 package net.kyrptonaught.kyrptconfig.config.screen.items;
 
 import net.kyrptonaught.kyrptconfig.config.screen.NotSuckyButton;
+import net.minecraft.client.gui.Click;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.text.Text;
+import net.minecraft.util.Colors;
 import net.minecraft.util.DyeColor;
+import net.minecraft.util.math.ColorHelper;
 
 public class BooleanItem extends ConfigItem<Boolean> {
     private final NotSuckyButton boolWidget;
@@ -22,17 +25,17 @@ public class BooleanItem extends ConfigItem<Boolean> {
         super.setValue(value);
         if (value) {
             boolWidget.setMessage(Text.translatable("key.kyrptconfig.config.true"));
-            boolWidget.setButtonColor(DyeColor.LIME.getFireworkColor());
+            boolWidget.setButtonColor(ColorHelper.withAlpha(0xff, DyeColor.LIME.getFireworkColor()));
         } else {
             boolWidget.setMessage(Text.translatable("key.kyrptconfig.config.false"));
-            boolWidget.setButtonColor(DyeColor.RED.getSignColor());
+            boolWidget.setButtonColor(Colors.RED);
         }
     }
 
     @Override
-    public void mouseClicked(double mouseX, double mouseY, int button) {
-        super.mouseClicked(mouseX, mouseY, button);
-        boolWidget.mouseClicked(mouseX, mouseY, button);
+    public void mouseClicked(Click click, boolean doubled) {
+        super.mouseClicked(click, doubled);
+        boolWidget.mouseClicked(click, doubled);
     }
 
     @Override

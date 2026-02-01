@@ -1,6 +1,7 @@
 package net.kyrptonaught.kyrptconfig.config;
 
 import com.google.gson.GsonBuilder;
+import com.google.gson.Strictness;
 import net.fabricmc.loader.api.FabricLoader;
 import net.kyrptonaught.jankson.Jankson;
 import net.minecraft.util.Identifier;
@@ -36,8 +37,8 @@ public class ConfigManager {
         Gson = new GsonJsonLoader();
         ((GsonJsonLoader) Gson).provideGson(new GsonBuilder()
                 .setPrettyPrinting()
-                .setLenient()
-                .registerTypeAdapter(Identifier.class, new Identifier.Serializer())
+                .setStrictness(Strictness.LENIENT)
+                .registerTypeAdapter(Identifier.class, Identifier.CODEC)
                 .create());
     }
 

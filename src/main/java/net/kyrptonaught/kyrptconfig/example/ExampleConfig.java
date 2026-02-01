@@ -10,6 +10,7 @@ import net.kyrptonaught.kyrptconfig.config.screen.items.ButtonItem;
 import net.kyrptonaught.kyrptconfig.config.screen.items.KeybindItem;
 import net.kyrptonaught.kyrptconfig.config.screen.items.TextItem;
 import net.kyrptonaught.kyrptconfig.config.screen.items.lists.BlockIconList;
+import net.kyrptonaught.kyrptconfig.config.screen.items.lists.ItemIconList;
 import net.kyrptonaught.kyrptconfig.config.screen.items.lists.StringList;
 import net.kyrptonaught.kyrptconfig.config.screen.items.number.FloatItem;
 import net.kyrptonaught.kyrptconfig.config.screen.items.number.IntegerItem;
@@ -61,6 +62,8 @@ public class ExampleConfig implements ModMenuApi {
             blackListSection.addConfigItem(hideList);
 
             blackListSection.addConfigItem(new BlockIconList(Text.translatable("key.diggusmaximus.config.blacklist"), new ArrayList<>(), new ArrayList<>(), true));
+
+            blackListSection.addConfigItem(new ItemIconList(Text.translatable("key.diggusmaximus.config.itemList"), new ArrayList<>(), new ArrayList<>(), true));
 
             new ConfigSection(configScreen, Text.literal("Tab Test 1"));
             new ConfigSection(configScreen, Text.literal("Tab Test 2"));

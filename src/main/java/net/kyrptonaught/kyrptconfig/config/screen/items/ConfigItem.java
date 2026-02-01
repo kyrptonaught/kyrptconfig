@@ -2,9 +2,13 @@ package net.kyrptonaught.kyrptconfig.config.screen.items;
 
 import net.kyrptonaught.kyrptconfig.config.screen.NotSuckyButton;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.gui.Click;
 import net.minecraft.client.gui.DrawContext;
+import net.minecraft.client.input.CharInput;
+import net.minecraft.client.input.KeyInput;
 import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
+import net.minecraft.util.Colors;
 import net.minecraft.util.Language;
 import net.minecraft.util.math.ColorHelper;
 
@@ -126,17 +130,17 @@ public abstract class ConfigItem<T> {
     public void tick() {
     }
 
-    public void mouseClicked(double mouseX, double mouseY, int button) {
+    public void mouseClicked(Click click, boolean doubled) {
         if (isHidden) return;
         if (resetButton != null)
-            resetButton.mouseClicked(mouseX, mouseY, button);
+            resetButton.mouseClicked(click, doubled);
     }
 
-    public boolean charTyped(char chr, int modifiers) {
+    public boolean charTyped(CharInput input) {
         return false;
     }
 
-    public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
+    public boolean keyPressed(KeyInput input) {
         return false;
     }
 
@@ -148,7 +152,7 @@ public abstract class ConfigItem<T> {
         if (mouseY > y && mouseY < height)
             context.fill(0, y - 1, width, height + 1, ColorHelper.getArgb(255, 55, 55, 55));
 
-        context.drawText(MinecraftClient.getInstance().textRenderer, this.fieldTitle, x, y + 6, 16777215, true);
+        context.drawText(MinecraftClient.getInstance().textRenderer, this.fieldTitle, x, y + 6, Colors.WHITE, true);
 
         if (resetButton != null) {
             this.resetButton.setY(y);

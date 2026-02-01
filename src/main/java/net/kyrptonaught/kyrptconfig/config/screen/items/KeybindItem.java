@@ -1,8 +1,10 @@
 package net.kyrptonaught.kyrptconfig.config.screen.items;
 
 import net.kyrptonaught.kyrptconfig.config.screen.NotSuckyButton;
+import net.minecraft.client.gui.Click;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.tooltip.Tooltip;
+import net.minecraft.client.input.KeyInput;
 import net.minecraft.client.resource.language.I18n;
 import net.minecraft.client.util.InputUtil;
 import net.minecraft.text.MutableText;
@@ -44,25 +46,25 @@ public class KeybindItem extends ConfigItem<String> {
     }
 
     @Override
-    public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
+    public boolean keyPressed(KeyInput input) {
         if (isListening) {
-            if (keyCode == GLFW.GLFW_KEY_ESCAPE) {
+            if (input.getKeycode() == GLFW.GLFW_KEY_ESCAPE) {
                 setValue(value);
                 return true;
             }
-            setValue(InputUtil.fromKeyCode(keyCode, scanCode).getTranslationKey());
+            setValue(InputUtil.fromKeyCode(input).getTranslationKey());
             return true;
         }
         return false;
     }
 
     @Override
-    public void mouseClicked(double mouseX, double mouseY, int button) {
-        super.mouseClicked(mouseX, mouseY, button);
+    public void mouseClicked(Click click, boolean doubled) {
+        super.mouseClicked(click, doubled);
         boolean handled;
-        handled = (keyButton.mouseClicked(mouseX, mouseY, button) || resetButton.mouseClicked(mouseX, mouseY, button));
+        handled = (keyButton.mouseClicked(click, doubled) || resetButton.mouseClicked(click, doubled));
         if (isListening && !handled) {
-            setValue(InputUtil.Type.MOUSE.createFromCode(button).getTranslationKey());
+            setValue(InputUtil.Type.MOUSE.createFromCode(click.button()).getTranslationKey());
         }
     }
 

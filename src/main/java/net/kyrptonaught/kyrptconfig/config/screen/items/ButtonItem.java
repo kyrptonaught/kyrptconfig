@@ -2,6 +2,7 @@ package net.kyrptonaught.kyrptconfig.config.screen.items;
 
 import net.kyrptonaught.kyrptconfig.config.screen.NotSuckyButton;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.gui.Click;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.text.Text;
 
@@ -19,9 +20,9 @@ public class ButtonItem extends ConfigItem {
         return this;
     }
 
-    public void mouseClicked(double mouseX, double mouseY, int button) {
-        super.mouseClicked(mouseX, mouseY, button);
-        this.button.mouseClicked(mouseX, mouseY, button);
+    public void mouseClicked(Click click, boolean doubled) {
+        super.mouseClicked(click, doubled);
+        this.button.mouseClicked(click, doubled);
     }
 
     @Override

@@ -1,8 +1,11 @@
 package net.kyrptonaught.kyrptconfig.config.screen;
 
 import net.kyrptonaught.kyrptconfig.config.screen.items.ConfigItem;
+import net.minecraft.client.gui.Click;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.Screen;
+import net.minecraft.client.input.CharInput;
+import net.minecraft.client.input.KeyInput;
 import net.minecraft.text.Text;
 import net.minecraft.util.math.MathHelper;
 
@@ -62,28 +65,28 @@ public class ConfigSection extends Screen {
         }
     }
 
-    public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
+    public boolean keyPressed(KeyInput input) {
         for (ConfigItem<?> configItem : configs) {
-            if (configItem.keyPressed(keyCode, scanCode, modifiers))
+            if (configItem.keyPressed(input))
                 return true;
         }
         return false;
     }
 
     @Override
-    public boolean charTyped(char chr, int modifiers) {
+    public boolean charTyped(CharInput input) {
         for (ConfigItem<?> configItem : configs) {
-            if (configItem.charTyped(chr, modifiers))
+            if (configItem.charTyped(input))
                 return true;
         }
         return false;
     }
 
-    public boolean mouseClicked(double mouseX, double mouseY, int button) {
+    public boolean mouseClicked(Click click, boolean doubled) {
         for (ConfigItem<?> configItem : configs) {
-            configItem.mouseClicked(mouseX, mouseY, button);
+            configItem.mouseClicked(click, doubled);
         }
-        mouseScrolled(mouseX, mouseY, 0,0); // update scroll if option changes screen size
+        mouseScrolled(click.x(), click.y(), 0,0); // update scroll if option changes screen size
         return false;
     }
 

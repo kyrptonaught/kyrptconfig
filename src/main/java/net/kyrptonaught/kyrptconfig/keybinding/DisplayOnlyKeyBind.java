@@ -9,13 +9,13 @@ public class DisplayOnlyKeyBind extends KeyBinding {
     private CustomKeyBinding customKeyBinding;
     private final Consumer<InputUtil.Key> keySet;
 
-    public DisplayOnlyKeyBind(String translationKey, InputUtil.Type type, int code, String category) {
+    public DisplayOnlyKeyBind(String translationKey, InputUtil.Type type, int code, KeyBinding.Category category) {
         super(translationKey, type, code, category);
         keySet = (boundKey) -> {
         };
     }
 
-    public DisplayOnlyKeyBind(String translationKey, String category, CustomKeyBinding customKeyBinding, Consumer<InputUtil.Key> keySet) {
+    public DisplayOnlyKeyBind(String translationKey, KeyBinding.Category category, CustomKeyBinding customKeyBinding, Consumer<InputUtil.Key> keySet) {
         super(translationKey, customKeyBinding.getDefaultKey().getCategory(), customKeyBinding.getDefaultKey().getCode(), category);
         this.customKeyBinding = customKeyBinding;
         this.keySet = keySet;
@@ -34,15 +34,15 @@ public class DisplayOnlyKeyBind extends KeyBinding {
     }
 
     @Override
-    public String getCategory() {
+    public KeyBinding.Category getCategory() {
         updateSetKey();
         return super.getCategory();
     }
 
     @Override
-    public String getTranslationKey() {
+    public String getBoundKeyTranslationKey() {
         updateSetKey();
-        return super.getTranslationKey();
+        return super.getBoundKeyTranslationKey();
     }
 
     @Override
